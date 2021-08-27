@@ -21,7 +21,7 @@ loadSprite('dino1', "sheets/tard.png", {
     }
   }
 });
-loadSprite("bg", "grass.png");
+loadSprite("bg", "p78YTHe.png");
 loadSprite("pipe", "pipe.png");
 
 scene("main", () => {
@@ -43,7 +43,7 @@ scene("main", () => {
   // background
   add([
     sprite("bg"),
-    scale(35),
+    scale(2),
   ]);
 
   //player 
@@ -97,12 +97,10 @@ scene("main", () => {
     pipe.move(-SPEED, 0);
     
     // increment score if pipe move pass the player
-    if (pipe.passed === false && (pipe.pos.x + 20) < player.pos.x) {
+    if ((pipe.passed === false) && (pipe.pos.x + 35) < player.pos.x) {
         pipe.passed = true;
         score += 1;
         scoreLabel.text = score;
-        debug.log("pipe pos " + pipe.pos.x);
-        debug.log("player pos " + player.pos.x);
     }
     
     // destroy it it's out of view
@@ -117,7 +115,7 @@ scene("main", () => {
   });
 
   player.action(() => {
-    if (player.pos.y > height()) {
+    if (player.pos.y > height() || player.pos.y < 0) {
       go("lose", score);
     }
   });
@@ -127,9 +125,9 @@ scene("main", () => {
 scene("lose", (score) => {
   
   add([
-    text(score, 64),
-    pos(250, 150),
-    origin("center"),
+    text("You passed " + score + " pipes. Press space for a new game.",16),
+    pos(0, 150),
+    origin("left"),
   ]);
 
   keyPress("space", () => {
